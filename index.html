@@ -31,18 +31,33 @@
   .cta:active { transform: scale(0.98); }
   
   .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(10px); }
-  .stat-num { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; background: linear-gradient(180deg, #fff, #aaa); -webkit-background-clip: text; color: transparent; }
+  .stat-num { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; background: linear-gradient(180deg, #fff, #aaa); -webkit-background-clip: text; color: transparent; transition: all 0.3s ease; }
   
-  /* Particles */
-  .particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  /* Sub Count Live Pulse Animation */
+  .sub-pulse { animation: countGlow 0.5s ease-out; }
+  @keyframes countGlow {
+    0% { transform: scale(1.1); filter: drop-shadow(0 0 8px var(--gold)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  }
+
+  /* Stars & Particles Container */
+  .stars-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  .star { position: absolute; background: #fff; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: var(--opacity); }
   .particle { position: absolute; border-radius: 50%; background: var(--gold); animation: rise linear infinite; }
   
-  /* Animations */
+  /* Popup Styles */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal-box { transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .modal-overlay.active .modal-box { transform: scale(1); }
+
+  /* Keyframe Animations */
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes pulse { 0%,100% { box-shadow: 0 0 30px rgba(245,197,66,0.3); } 50% { box-shadow: 0 0 50px rgba(245,197,66,0.5); } }
   @keyframes blink { 50% { opacity: 0.3; } }
   @keyframes shine { 0%, 100% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
   @keyframes rise { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.3; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
+  @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 6px rgba(245,197,66,0.8); } }
 </style>
 
 <!-- Meta Pixel Code -->
@@ -62,12 +77,12 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-  
+
 </head>
 <body class="min-h-screen flex flex-col items-center px-6 pt-8 pb-12">
   <div class="mesh"></div>
   <div class="grain"></div>
-  <div class="particles" id="particles"></div>
+  <div class="stars-container" id="starsContainer"></div>
 
   <!-- Top Nav -->
   <div class="w-full max-w-sm flex justify-between items-center mb-8">
@@ -75,7 +90,10 @@ src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
       <div class="w-7 h-7 rounded-md flex items-center justify-center" style="background: linear-gradient(135deg, #f5c542, #b8860b);"><span class="font-display font-extrabold text-xs text-[#2b1f00]">TM</span></div>
       <span class="font-display font-semibold text-sm">The Trading Mentor</span>
     </div>
-    <i class="fa-solid fa-ellipsis text-white/50"></i>
+    <!-- Contact Button in Header -->
+    <button onclick="openModal()" class="text-xs text-[var(--gold-soft)] hover:text-white transition-colors bg-white/5 border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+      <i class="fa-regular fa-comment-dots text-[var(--gold)]"></i> Contact Us
+    </button>
   </div>
 
   <!-- Hero -->
@@ -85,7 +103,6 @@ src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
     <div class="relative mb-6">
       <div class="logo-ring"></div>
       <div class="logo-core">
-        <!-- Replace src with your exact image URL -->
         <img src="Mahira.jpeg" alt="The Trading Mentor Logo" id="profile-pic" onerror="this.src='Mahira.jpeg'">
       </div>
     </div>
@@ -97,7 +114,7 @@ src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
     <!-- Stats -->
     <div class="grid grid-cols-3 gap-3 w-full mt-8">
       <div class="glass rounded-xl py-3 px-2 text-center">
-        <div class="stat-num" data-count="23773">0</div>
+        <div class="stat-num" id="subscriberCount" data-count="23773">0</div>
         <div class="text-[9px] text-white/50 uppercase mt-1">Subscribers</div>
       </div>
       <div class="glass rounded-xl py-3 px-2 text-center">
@@ -113,8 +130,7 @@ src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
 
   <!-- Footer / CTA -->
   <div class="w-full max-w-sm mt-10">
-    <!-- Replace href with your actual Telegram Channel Link -->
-    <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" class="cta">
+    <a href="https://t.me/+EUnkqIuSyZw3NzM1" target="_blank" class="cta">
       <i class="fa-brands fa-telegram text-xl"></i>
       <span>Join Telegram Channel</span>
       <i class="fa-solid fa-arrow-right text-xs opacity-80"></i>
@@ -124,23 +140,96 @@ src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
       <span><i class="fa-solid fa-shield-halved text-[var(--gold)] mr-1"></i> Verified</span>
       <span><i class="fa-solid fa-gem text-[var(--gold)] mr-1"></i> Free Join</span>
     </div>
-    <p class="text-center text-[9px] text-white/30 mt-6">© 2026 The Trading Mentor™. <a href="#" class="underline">Privacy Policy</a> · <a href="#" class="underline">Terms</a></p>
+    
+    <!-- Footer Links including Contact Us -->
+    <p class="text-center text-[9px] text-white/30 mt-6">
+      © 2026 The Trading Mentor™. 
+      <a href="javascript:void(0)" onclick="openModal()" class="underline text-white/50 hover:text-white">Contact Us</a> · 
+      <a href="#" class="underline">Privacy Policy</a> · 
+      <a href="#" class="underline">Terms</a>
+    </p>
+  </div>
+
+  <!-- Contact Us Modal Popup -->
+  <div id="contactModal" class="modal-overlay px-6">
+    <div class="modal-box glass border border-white/10 p-6 rounded-2xl w-full max-w-sm text-center relative bg-[#0d0e15]/90">
+      <!-- Close Button -->
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-white/40 hover:text-white text-lg w-8 h-8 rounded-full flex items-center justify-center bg-white/5">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="w-12 h-12 rounded-full bg-[var(--gold)]/10 border border-[var(--gold)]/30 flex items-center justify-center mx-auto mb-4 text-[var(--gold)] text-xl">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+
+      <h3 class="font-display font-bold text-xl mb-1">Get In Touch</h3>
+      <p class="text-xs text-white/60 mb-6">Have questions or need assistance? Reach out directly to our admin team.</p>
+
+      <div class="space-y-3">
+        <!-- Direct Telegram Admin Support Link -->
+        <a href="https://t.me/+EUnkqIuSyZw3NzM1" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--gold)]/50 transition-all text-left">
+          <div class="w-9 h-9 rounded-lg bg-[#229ED9]/20 text-[#229ED9] flex items-center justify-center text-lg">
+            <i class="fa-brands fa-telegram"></i>
+          </div>
+          <div class="flex-1">
+            <div class="text-xs font-bold">Admin Support</div>
+            <div class="text-[10px] text-white/40">Direct Chat on Telegram</div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-xs text-white/30"></i>
+        </a>
+
+        <!-- Official Email Support -->
+        <a href="mailto:support@thetradingmentor.com" class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--gold)]/50 transition-all text-left">
+          <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="flex-1">
+            <div class="text-xs font-bold">Official Email</div>
+            <div class="text-[10px] text-white/40">support@thetradingmentor.com</div>
+          </div>
+          <i class="fa-solid fa-chevron-right text-xs text-white/30"></i>
+        </a>
+      </div>
+
+      <p class="text-[10px] text-white/30 mt-6"><i class="fa-solid fa-clock text-[var(--gold)] mr-1"></i> Average Response Time: &lt; 15 mins</p>
+    </div>
   </div>
 
 <script>
-  // Particles Animation
-  const pCont = document.getElementById('particles');
-  for(let i=0; i<12; i++) {
+  const container = document.getElementById('starsContainer');
+
+  // 1. Generate Stars Background (40 Dynamic Stars)
+  for(let i = 0; i < 40; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.left = Math.random() * 100 + '%';
+    const size = (1.5 + Math.random() * 2.5) + 'px';
+    star.style.width = size;
+    star.style.height = size;
+    star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+    star.style.setProperty('--opacity', 0.2 + Math.random() * 0.6);
+    star.style.animationDelay = (Math.random() * 3) + 's';
+    container.appendChild(star);
+  }
+
+  // 2. Rising Gold Particles (15 Floating Gold Dots)
+  for(let i = 0; i < 15; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.style.left = Math.random() * 100 + '%';
-    p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
-    p.style.animationDuration = (8 + Math.random() * 8) + 's';
+    const pSize = (2 + Math.random() * 2.5) + 'px';
+    p.style.width = pSize;
+    p.style.height = pSize;
+    p.style.animationDuration = (7 + Math.random() * 8) + 's';
     p.style.animationDelay = (Math.random() * 5) + 's';
-    pCont.appendChild(p);
+    container.appendChild(p);
   }
 
-  // Counter Animation
+  // 3. Initial Counter Animation
+  let currentSubscribers = 23773;
+  const subElement = document.getElementById('subscriberCount');
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if(e.isIntersecting) {
@@ -153,13 +242,51 @@ src="https://www.facebook.com/tr?id=1720062419286169&ev=PageView&noscript=1"
           const val = Math.floor(p * target);
           el.textContent = val >= 1000 ? (val/1000).toFixed(1).replace('.0','') + 'K' : val;
           if(p < 1) requestAnimationFrame(step);
+          else startLiveSubscriberEvent();
         }
         requestAnimationFrame(step);
         observer.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
+
   document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+
+  // 4. Dynamic Live Subscriber Count Event
+  function startLiveSubscriberEvent() {
+    function updateSubscriber() {
+      currentSubscribers += Math.floor(Math.random() * 3) + 1;
+      const formatted = (currentSubscribers / 1000).toFixed(1).replace('.0', '') + 'K';
+      
+      subElement.textContent = formatted;
+      subElement.classList.add('sub-pulse');
+
+      setTimeout(() => {
+        subElement.classList.remove('sub-pulse');
+      }, 500);
+
+      const nextInterval = Math.floor(Math.random() * 4000) + 3000;
+      setTimeout(updateSubscriber, nextInterval);
+    }
+
+    setTimeout(updateSubscriber, 3000);
+  }
+
+  // 5. Modal Popup Controls
+  const modal = document.getElementById('contactModal');
+
+  function openModal() {
+    modal.classList.add('active');
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+  }
+
+  // Close modal when clicking outside the box
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) closeModal();
+  });
 </script>
 </body>
 </html>
