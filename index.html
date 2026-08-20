@@ -1,106 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stock Market Basics – Join Free</title>
-  <meta name="description" content="100% free stock market education. Learn chart reading, technical analysis, and risk management. No buy/sell tips. For learning purpose only.">
-  <link rel="canonical" href="https://example.com/">
-
-  <!-- Performance -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-
-  <!-- Favicons (optional) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Stock Market Basics – Join Free">
-  <meta property="og:description" content="Learn charts & risk management. No buy/sell tips. 100% educational.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://example.com/">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=1600&auto=format&fit=crop">
-
-  <!-- Minimal CSS (inline for speed) -->
-  <style>
-    :root{
-      --bg1:#0c0c1d;
-      --bg2:#1a1a2b;
-      --brand: #ffcc00;
-      --brand-2:#00f0ff;
-      --text:#ffffff;
-      --muted:#b5b5c3;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        linear-gradient(135deg, rgba(0,0,0,.45), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=1600&auto=format&fit=crop') no-repeat center/cover fixed;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      min-height:100vh;
-    }
-    .container{
-      max-width:520px; margin:0 auto; padding:24px 18px; text-align:center; min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-      backdrop-filter: saturate(130%);
-    }
-    .badge{display:inline-block; font-size:.78rem; padding:6px 10px; border:1px solid #2a2a3a; border-radius:999px; color:#d6eaff; background:rgba(0,240,255,.08); margin-bottom:14px}
-    h1{font-size:1.9rem; line-height:1.2; margin:6px 0 10px; background:linear-gradient(90deg,var(--brand-2),var(--brand)); -webkit-background-clip:text; background-clip:text; color:transparent;}
-    .sub{font-size:1rem; color:var(--muted); margin:0 auto 16px; max-width:36ch}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(0,255,153,.07); border:1px dashed rgba(0,255,153,.35); color:#d8ffe9; font-size:.9rem; margin:6px 0 18px;
-    }
-    ul.bullets{list-style:none; padding:0; margin:0 0 18px}
-    ul.bullets li{margin:8px 0; color:#e9eef9}
-    .cta{
-      display:inline-block; text-decoration:none; background:var(--brand); color:#041b14; padding:14px 18px; font-weight:700; border-radius:12px; box-shadow:0 0 0 0 rgba(0,255,153,.6); transform:translateZ(0);
-      transition:transform .15s ease;
-      animation:pulse 1.6s infinite;
-    }
-    .cta:active{transform:scale(.98)}
-    @keyframes pulse{
-      0%{box-shadow:0 0 0 0 rgba(0,255,153,.55)}
-      70%{box-shadow:0 0 0 20px rgba(0,255,153,0)}
-      100%{box-shadow:0 0 0 0 rgba(0,255,153,0)}
-    }
-    .fineprint{font-size:.86rem; color:var(--muted); margin:18px auto 0; max-width:44ch}
-    .disclaimer{font-size:.78rem; color:#9aa4b2; margin:18px auto 0; max-width:50ch}
-    .safe{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; color:#a1ffd6; font-size:.9rem}
-    .shield{width:18px; height:18px; display:inline-block; border-radius:4px; background:linear-gradient(135deg,#0df,#0f9)}
-    footer{opacity:.8; margin-top:22px; font-size:.78rem; color:#9aa4b2}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Trading Mentor™</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root { --gold: #f5c542; --gold-soft: #ffe9a8; }
+  * { -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Manrope', sans-serif; background: #08080c; color: #fff; overflow-x: hidden; }
+  .font-display { font-family: 'Sora', sans-serif; }
+  
+  .mesh { position: fixed; inset: 0; z-index: -2; background: radial-gradient(50% 30% at 50% 0%, rgba(245,197,66,0.15), transparent 70%); }
+  .grain { position: fixed; inset: 0; z-index: -1; opacity: 0.4; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); mix-blend-mode: overlay; }
+  
+  /* Logo Ring & Profile Image Container */
+  .logo-ring { position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(245,197,66,0.3); animation: spin 20s linear infinite; }
+  .logo-ring::before { content: ''; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+  .logo-core { width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(245,197,66,0.3); animation: pulse 3s ease-in-out infinite; display: flex; align-items: center; justify-content: center; background: #111; }
+  .logo-core img { width: 100%; height: 100%; object-fit: cover; }
+  
+  /* Buttons & Badges */
+  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(245,197,66,0.08); border: 1px solid rgba(245,197,66,0.2); color: var(--gold-soft); font-size: 10px; letter-spacing: 0.2em; font-weight: 600; }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: blink 1.4s infinite; }
+  
+  .cta { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; font-weight: 700; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px rgba(34,197,94,0.35); transition: transform 0.2s; text-decoration: none; }
+  .cta::before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%); transform: translateX(-100%); animation: shine 3.5s infinite; }
+  .cta:active { transform: scale(0.98); }
+  
+  .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(10px); }
+  .stat-num { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; background: linear-gradient(180deg, #fff, #aaa); -webkit-background-clip: text; color: transparent; }
+  
+  /* Particles */
+  .particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  .particle { position: absolute; border-radius: 50%; background: var(--gold); animation: rise linear infinite; }
+  
+  /* Animations */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 30px rgba(245,197,66,0.3); } 50% { box-shadow: 0 0 50px rgba(245,197,66,0.5); } }
+  @keyframes blink { 50% { opacity: 0.3; } }
+  @keyframes shine { 0%, 100% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+  @keyframes rise { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.3; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
+</style>
 </head>
-<body>
-  <main class="container">
-    <span class="badge">100% Educational • Policy Safe</span>
-    <h1>Stock Market Basics – Join Free</h1>
-    <p class="sub">Education only – no investment advice</p>
+<body class="min-h-screen flex flex-col items-center px-6 pt-8 pb-12">
+  <div class="mesh"></div>
+  <div class="grain"></div>
+  <div class="particles" id="particles"></div>
 
-    <div class="pill">🚫 No Buy/Sell Tips • ✅ For Learning Purpose Only</div>
+  <!-- Top Nav -->
+  <div class="w-full max-w-sm flex justify-between items-center mb-8">
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 rounded-md flex items-center justify-center" style="background: linear-gradient(135deg, #f5c542, #b8860b);"><span class="font-display font-extrabold text-xs text-[#2b1f00]">TM</span></div>
+      <span class="font-display font-semibold text-sm">The Trading Mentor</span>
+    </div>
+    <i class="fa-solid fa-ellipsis text-white/50"></i>
+  </div>
 
-    <ul class="bullets" aria-label="What you'll learn">
-      <li>• Chart basics & risk rules (no return promises)</li>
-      <li>• How to read trends without speculation</li>
-      <li>• Market discipline & common mistakes</li>
-    </ul>
+  <!-- Hero -->
+  <div class="flex flex-col items-center text-center max-w-sm w-full flex-1 flex justify-center">
+    <span class="badge mb-6"><span class="dot"></span>EXCLUSIVE ACCESS</span>
+    
+    <div class="relative mb-6">
+      <div class="logo-ring"></div>
+      <div class="logo-core">
+        <!-- Replace src with your exact image URL -->
+        <img src="Mahira.jpeg" alt="The Trading Mentor Logo" id="profile-pic" onerror="this.src='Mahira.jpeg'">
+      </div>
+    </div>
 
-    <!-- CTA goes to a page-specific bridge -->
-    <a class="cta" href="bridge-lp42.html" rel="nofollow">Start Learning</a>
+    <h1 class="font-display font-extrabold text-3xl leading-tight">The Trading Mentor<sup class="text-sm text-[var(--gold)]">™</sup></h1>
+    <p class="font-display text-sm text-[var(--gold-soft)]/80 tracking-wide mt-1">OFFICIAL TELEGRAM CHANNEL</p>
+    <p class="text-sm text-white/50 mt-4 max-w-[280px]">Learn price action, market psychology, and daily trade setups from an experienced mentor.</p>
 
-    <div class="safe"><span class="shield" aria-hidden="true"></span> Ad Policy Friendly Content</div>
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-3 w-full mt-8">
+      <div class="glass rounded-xl py-3 px-2 text-center">
+        <div class="stat-num" data-count="23773">0</div>
+        <div class="text-[9px] text-white/50 uppercase mt-1">Subscribers</div>
+      </div>
+      <div class="glass rounded-xl py-3 px-2 text-center">
+        <div class="stat-num" data-count="92">0</div>
+        <div class="text-[9px] text-white/50 uppercase mt-1">% Accuracy</div>
+      </div>
+      <div class="glass rounded-xl py-3 px-2 text-center">
+        <div class="stat-num" data-count="1200">0</div>
+        <div class="text-[9px] text-white/50 uppercase mt-1">Setups/yr</div>
+      </div>
+    </div>
+  </div>
 
-    <p class="fineprint">We focus on concepts & frameworks suitable for beginners.</p>
-    <p class="disclaimer"><em>This website is for educational purposes only. We do not provide investment, trading, or financial advice.</em></p>
+  <!-- Footer / CTA -->
+  <div class="w-full max-w-sm mt-10">
+    <!-- Replace href with your actual Telegram Channel Link -->
+    <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" class="cta">
+      <i class="fa-brands fa-telegram text-xl"></i>
+      <span>Join Telegram Channel</span>
+      <i class="fa-solid fa-arrow-right text-xs opacity-80"></i>
+    </a>
+    <div class="flex justify-center gap-4 mt-4 text-[10px] text-white/40 uppercase tracking-wider">
+      <span><i class="fa-solid fa-bolt text-[var(--gold)] mr-1"></i> Live Signals</span>
+      <span><i class="fa-solid fa-shield-halved text-[var(--gold)] mr-1"></i> Verified</span>
+      <span><i class="fa-solid fa-gem text-[var(--gold)] mr-1"></i> Free Join</span>
+    </div>
+    <p class="text-center text-[9px] text-white/30 mt-6">© 2026 The Trading Mentor™. <a href="#" class="underline">Privacy Policy</a> · <a href="#" class="underline">Terms</a></p>
+  </div>
 
-    <footer>© <span id="y"></span> Market Basics Learning Hub</footer>
-  </main>
+<script>
+  // Particles Animation
+  const pCont = document.getElementById('particles');
+  for(let i=0; i<12; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.width = p.style.height = (2 + Math.random() * 2) + 'px';
+    p.style.animationDuration = (8 + Math.random() * 8) + 's';
+    p.style.animationDelay = (Math.random() * 5) + 's';
+    pCont.appendChild(p);
+  }
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+  // Counter Animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        const el = e.target;
+        const target = +el.dataset.count;
+        const duration = 1500;
+        const startTime = performance.now();
+        function step(now) {
+          const p = Math.min((now - startTime) / duration, 1);
+          const val = Math.floor(p * target);
+          el.textContent = val >= 1000 ? (val/1000).toFixed(1).replace('.0','') + 'K' : val;
+          if(p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
